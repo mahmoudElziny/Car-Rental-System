@@ -1,0 +1,16 @@
+{
+  "name": "mahmoud-abdelsamad-mahmoud-sun-wed-7pm-assignment-7-01156864422",
+  "version": "1.0.0",
+  "description": "Car Rental System",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Mahmoud Elzeny",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
