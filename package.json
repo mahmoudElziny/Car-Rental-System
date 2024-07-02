@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Car Rental System",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js"
@@ -11,6 +12,8 @@
   "author": "Mahmoud Elzeny",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
   }
 }
