@@ -22,6 +22,11 @@ export const registration = async (req, res) => {
                     password,
                     phonenumber
             });
+
+            await Customer.createIndex( { userName : 'text'},{unique:true , name:"userName Unique"} );
+            await Customer.createIndex( { email : 1},{unique:true , name:"email Unique"} );
+
+            
             
         
             res.json({message: 'User Added Successfully', data: newCustomer});
@@ -91,7 +96,7 @@ export const getSpecificUser = async (req, res) => {
             {$or: [{ _id: new ObjectId(_id) },{userName},{email}]}
         );
 
-        res.json({message:" User is found", data: customer});
+        res.json({message:" User has found", data: customer});
 
     } catch (error) {
         console.log("Error in finding the User", error);
@@ -110,34 +115,34 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-try {
-    let { _id } = req.params;
-    let {userName, email, password, phonenumber} = req.body;
-    _id = new ObjectId(_id);
-    const isUserLoggedIn = await Customer.findOne({
-        _id
-    });
-
-    if(isUserLoggedIn.loggedIn == "true"){
-        if(userName && email && password && phonenumber){
-            password = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(8));  
-            const user = await Customer.updateOne(
-                { _id },
-                {$set: {userName,email,password,phonenumber}}
-                
-                );
-                
-            return res.json({message: "user updated successfully", data: user});
+    try {
+        let { _id } = req.params;
+        let {userName, email, password, phonenumber} = req.body;
+        _id = new ObjectId(_id);
+        const isUserLoggedIn = await Customer.findOne({
+            _id
+        });
+    
+        if(isUserLoggedIn.loggedIn == "true"){
+            if(userName && email && password && phonenumber){
+                password = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(8));  
+                const user = await Customer.updateOne(
+                    { _id },
+                    {$set: {userName,email,password,phonenumber}}
+                    
+                    );
+                    
+                return res.json({message: "user updated successfully", data: user});
+            }
+            return res.json({message: "All fields must be initialized"});
         }
-        return res.json({message: "All fields must be initialized"});
+    
+        return res.json({message: "Must Logged In First"});
+    
+    } catch (error) {
+        console.log("Error in updating the user", error);
+        res.json({message:"Error in updating the user"});
     }
-
-    return res.json({message: "Must Logged In First"});
-
-} catch (error) {
-    console.log("Error in updating the user", error);
-    res.json({message:"Error in updating the user"});
-}
 }
 
 export const deleteUser = async (req, res) => {

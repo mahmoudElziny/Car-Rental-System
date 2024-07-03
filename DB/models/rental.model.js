@@ -1,3 +1,3 @@
 import { db } from '../connection.js'
 
-export const Rental = db.collecion('rentals');
+export const Rental = await db.createCollection('rentals');
